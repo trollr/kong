@@ -962,10 +962,10 @@ local function post_health(upstream, hostname, ip, port, is_healthy)
   end
 
   if ip then
-    return balancer:setAddressStatus(is_healthy, ip, port, hostname)
+    healthchecker:set_target_status(ip or hostname, port, hostname, is_healthy)
+  else
+    healthchecker:set_all_target_statuses_for_hostname(hostname, port, is_healthy)
   end
-
-  return balancer:setHostStatus(is_healthy, hostname, port)
 end
 
 
